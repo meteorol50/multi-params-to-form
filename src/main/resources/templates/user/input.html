@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>ユーザ登録フォーム</h1>
+	<form action="user/input.html" th:action="@{/user/create}" method="post"
+	th:object="${userForm}">
+		<div th:errors="*{name}"
+			style="color:red">エラー！</div>
+		<label for="name">名前:</label><input id="name" name="name" th:field="*{name}"><br>
+		
+		趣味:<br>
+		
+		<div th:each="hobby,status:${hobbyList}">
+			<label th:for="${hobby.name}"><span th:text="${hobby.name}"></span>
+								<!-- hiddenでhobbyId、textで名前をリストにして送る、[]の中は0,1,2,...となるように送る -->
+			<input th:id="${hobby.id}" type="hidden" th:name="'hobbies['+${status.index}+'].hobbyId'" th:value="${hobby.id}">
+			<input th:id="${hobby.name}" type="text" th:name="'hobbies['+${status.index}+'].value'">
+			</label>
+		</div>
+		<button>登録</button>
+	</form>
+</body>
+</html>
